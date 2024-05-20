@@ -2,6 +2,10 @@ FROM ubuntu:22.04
 ENV PLATFORM="docker"
 # We install git only if not testing local depository. If building local, comment lines and use git clone --recurse-submodules on parent dir
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y git bash
+#Only during dev. We install packages to avoid reinstalling later.
+RUN DEBIAN_FRONTEND=noninteractive apt install -y wget make inkscape ffmpeg flac fdkaac vorbis-tools opus-tools zip unzip lsb-release curl gpg postgresql sed coreutils build-essential sudo nano
+ARG CACHE_INVALIDATION="yes 1"
+RUN echo ${CACHE_INVALIDATION}
 RUN git clone --recurse-submodules https://github.com/tomich/craig.git
 # If testing locally we copy current dir to container(only if parent repo was cloned with git clone --recurse-submodules)
 # COPY . /craig
@@ -14,5 +18,7 @@ RUN bash -c "/craig/install.sh"
 EXPOSE 3000
 EXPOSE 5029
 RUN rm -rf /root/.pm2 /root/.bash_history /craig/install.config /craig/.env /craig/apps/dashboard/.env /craig/apps/download/.env /craig/apps/bot/.env /craig/apps/bot/config/default.js /craig/apps/tasks/config/default.js /craig/node_modules/craig-bot/.env /craig/node_modules/craig-dashboard/.env /craig/node_modules/craig-horse/.env /craig/node_modules/craig-bot/config/default.js /craig/node_modules/craig-tasks/config/default.js
-ENTRYPOINT bash -c "/craig/start.sh"
+#Only during dev.
+ENTRYPOINT bash
+# ENTRYPOINT bash -c "/craig/start.sh"
 
