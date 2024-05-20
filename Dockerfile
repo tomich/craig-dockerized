@@ -19,6 +19,6 @@ EXPOSE 3000
 EXPOSE 5029
 RUN rm -rf /root/.pm2 /root/.bash_history /craig/install.config /craig/.env /craig/apps/dashboard/.env /craig/apps/download/.env /craig/apps/bot/.env /craig/apps/bot/config/default.js /craig/apps/tasks/config/default.js /craig/node_modules/craig-bot/.env /craig/node_modules/craig-dashboard/.env /craig/node_modules/craig-horse/.env /craig/node_modules/craig-bot/config/default.js /craig/node_modules/craig-tasks/config/default.js
 #Only during dev.
-ENTRYPOINT bash
-# ENTRYPOINT bash -c "/craig/start.sh"
+# ENTRYPOINT bash
+ENTRYPOINT bash -c "/craig/start.sh"
 
