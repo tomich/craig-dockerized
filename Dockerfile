@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 ENV PLATFORM="docker"
 # We install git only if not testing local depository. If building local, comment lines and use git clone --recurse-submodules on parent dir
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y git bash
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt install -y git bash
 #Only during dev. We install packages to avoid reinstalling later.
 RUN DEBIAN_FRONTEND=noninteractive apt install -y wget make inkscape ffmpeg flac fdkaac vorbis-tools opus-tools zip unzip lsb-release curl gpg postgresql sed coreutils build-essential sudo nano
 ARG CACHE_INVALIDATION="yes 1"
