@@ -4,8 +4,11 @@ ENV PLATFORM="docker"
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y git bash
 RUN git clone --recurse-submodules https://github.com/tomich/craig.git
 # If testing locally we copy current dir to container(only if parent repo was cloned with git clone --recurse-submodules)
-# COPY . /crig
+# COPY . /craig
 WORKDIR /craig
+#The following line is for testing only. Will make all perks the default
+RUN sed -i 's/\[0\]/\[99]/' "/craig/apps/bot/config/_default.js" && sed -i 's/\[-1\]/\[0]/' "/craig/apps/bot/config/_default.js" && sed -i 's/\[99\]/\[-1]/' "/craig/apps/bot/config/_default.js"
+# Copy config files for initial install
 COPY files/install.config /craig/install.config
 RUN bash -c "/craig/install.sh"
 EXPOSE 3000
